@@ -3,8 +3,8 @@ import torch
 import numpy as np
 import open3d as o3d
 import trimesh
-from pytorch3d.structures import Meshes
-from pytorch3d.transforms import quaternion_to_matrix, Transform3d, matrix_to_quaternion
+from sam3d_objects.pytorch3d_shim.structures import Meshes
+from sam3d_objects.pytorch3d_shim.transforms import quaternion_to_matrix, Transform3d, matrix_to_quaternion
 from sam3d_objects.data.dataset.tdfy.transforms_3d import compose_transform, decompose_transform
 from sam3d_objects.data.dataset.tdfy.pose_target import PoseTargetConverter
 from loguru import logger

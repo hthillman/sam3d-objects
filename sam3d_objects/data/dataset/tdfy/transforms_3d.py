@@ -3,7 +3,7 @@ from collections import namedtuple
 import math
 import torch
 
-from pytorch3d.transforms import (
+from sam3d_objects.pytorch3d_shim.transforms import (
     Rotate,
     Translate,
     Scale,

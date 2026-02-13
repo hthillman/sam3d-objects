@@ -42,21 +42,15 @@ import numpy as np
 import plotly.graph_objects as go
 import torch
 from plotly.subplots import make_subplots
-from pytorch3d.renderer import (
+from sam3d_objects.pytorch3d_shim.renderer import (
     HeterogeneousRayBundle,
     RayBundle,
     TexturesAtlas,
     TexturesVertex,
     ray_bundle_to_ray_points,
-)
-from pytorch3d.renderer.camera_utils import camera_to_eye_at_up
-from pytorch3d.renderer.cameras import CamerasBase
-from pytorch3d.structures import (
-    Meshes,
-    Pointclouds,
-    join_meshes_as_scene,
-)
-from pytorch3d.vis.plotly_vis import (
+    camera_to_eye_at_up,
+    CamerasBase,
+    PerspectiveCameras,
     AxisArgs,
     Lighting,
     _add_camera_trace,
@@ -65,6 +59,11 @@ from pytorch3d.vis.plotly_vis import (
     _is_ray_bundle,
     _scale_camera_to_bounds,
     _update_axes_bounds,
+)
+from sam3d_objects.pytorch3d_shim.structures import (
+    Meshes,
+    Pointclouds,
+    join_meshes_as_scene,
 )
 
 

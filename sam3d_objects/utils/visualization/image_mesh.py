@@ -3,8 +3,8 @@ from collections import namedtuple
 from typing import Tuple, Optional, Union
 import numpy as np
 import torch
-from pytorch3d.structures import Meshes
-from pytorch3d.renderer.mesh.textures import TexturesVertex
+from sam3d_objects.pytorch3d_shim.structures import Meshes
+from sam3d_objects.pytorch3d_shim.renderer import TexturesVertex
 
 from utils3d.numpy import (
     depth_edge,

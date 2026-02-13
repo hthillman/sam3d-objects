@@ -8,8 +8,8 @@ import torchvision
 from loguru import logger
 from PIL import Image
 
-from pytorch3d.renderer import look_at_view_transform
-from pytorch3d.transforms import Transform3d
+from sam3d_objects.pytorch3d_shim.renderer import look_at_view_transform
+from sam3d_objects.pytorch3d_shim.transforms import Transform3d
 
 from sam3d_objects.model.backbone.dit.embedder.pointmap import PointPatchEmbed
 from sam3d_objects.pipeline.inference_pipeline import InferencePipeline

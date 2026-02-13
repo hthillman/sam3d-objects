@@ -6,7 +6,7 @@ from loguru import logger
 
 from sam3d_objects.data.utils import expand_as_right, tree_tensor_map
 from sam3d_objects.data.dataset.tdfy.transforms_3d import compose_transform, decompose_transform
-from pytorch3d.transforms import Transform3d, quaternion_to_matrix, matrix_to_quaternion
+from sam3d_objects.pytorch3d_shim.transforms import Transform3d, quaternion_to_matrix, matrix_to_quaternion
 
 
 @dataclass
