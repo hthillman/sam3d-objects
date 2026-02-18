@@ -215,7 +215,8 @@ class Transform3d:
         """Compose with other transforms: self then others (left to right)."""
         mat = self._matrix
         for other in others:
-            mat = torch.bmm(mat, other._matrix)
+            other_mat = other._matrix.to(device=mat.device, dtype=mat.dtype)
+            mat = torch.matmul(mat, other_mat)
         return Transform3d(dtype=self.dtype, device=self.device, matrix=mat)
 
     def transform_points(
