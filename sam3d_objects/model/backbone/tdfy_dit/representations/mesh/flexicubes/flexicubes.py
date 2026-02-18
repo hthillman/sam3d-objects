@@ -15,7 +15,29 @@
 # limitations under the License.
 import torch
 from .tables import *
-from kaolin.utils.testing import check_tensor
+
+
+def check_tensor(tensor, shape, throw=True):
+    """Lightweight replacement for kaolin.utils.testing.check_tensor.
+
+    Checks that *tensor* matches the expected *shape* tuple, where ``None``
+    in a dimension means "any size".  Returns ``True``/``False``; when
+    *throw* is ``True`` raises on mismatch instead.
+    """
+    if tensor.dim() != len(shape):
+        if throw:
+            raise ValueError(
+                f"Expected {len(shape)}-D tensor, got {tensor.dim()}-D"
+            )
+        return False
+    for i, (actual, expected) in enumerate(zip(tensor.shape, shape)):
+        if expected is not None and actual != expected:
+            if throw:
+                raise ValueError(
+                    f"Dimension {i}: expected {expected}, got {actual}"
+                )
+            return False
+    return True
 
 __all__ = [
     'FlexiCubes'
