@@ -29,6 +29,7 @@ imageio
 # Utilities
 numpy
 scipy
+setuptools
 utils3d
 loguru==0.7.2
 tqdm
