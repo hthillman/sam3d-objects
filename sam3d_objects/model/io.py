@@ -1,16 +1,22 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
 from typing import Any, Callable, Dict, List, Optional, Union, Iterable
-import lightning.pytorch as pl
 import torch
 from pathlib import Path
 import os
 import re
 from loguru import logger
-from lightning.pytorch.utilities.consolidate_checkpoint import (
-    _format_checkpoint,
-    _load_distributed_checkpoint,
-)
 from glob import glob
+
+try:
+    import lightning.pytorch as pl
+    from lightning.pytorch.utilities.consolidate_checkpoint import (
+        _format_checkpoint,
+        _load_distributed_checkpoint,
+    )
+    _HAS_LIGHTNING = True
+except ImportError:
+    pl = None
+    _HAS_LIGHTNING = False
 
 from sam3d_objects.data.utils import get_child, set_child
 
@@ -134,6 +140,8 @@ def get_last_checkpoint(path: str):
 
 
 def load_sharded_checkpoint(path: str, device: Optional[str]):
+    if not _HAS_LIGHTNING:
+        raise RuntimeError("lightning is required for sharded checkpoint loading")
     if device != "cpu":
         raise RuntimeError(
             f'loading sharded weights on device "{device}" is not available, please use the "cpu" device instead'
@@ -144,7 +152,7 @@ def load_sharded_checkpoint(path: str, device: Optional[str]):
 
 
 def load_model_from_checkpoint(
-    model: Union[pl.LightningModule, torch.nn.Module],
+    model: torch.nn.Module,
     checkpoint_path: str,
     strict: bool = True,
     device: Optional[str] = None,
@@ -167,7 +175,7 @@ def load_model_from_checkpoint(
     else:  # if neither a file nor a directory, path does not exist
         raise FileNotFoundError(checkpoint_path)
 
-    if isinstance(model, pl.LightningModule):
+    if _HAS_LIGHTNING and pl is not None and isinstance(model, pl.LightningModule):
         model.on_load_checkpoint(checkpoint)
 
     # get state dictionary
