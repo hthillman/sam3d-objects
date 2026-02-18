@@ -245,8 +245,9 @@ class Transform3d:
         )
         points_h = torch.cat([points, ones], dim=-1)  # (N, P, 4)
 
-        # Right-multiply: points_h @ M^T gives (N, P, 4)
-        transformed = torch.bmm(points_h, mat)
+        # Right-multiply: points_h @ M gives (N, P, 4)
+        # Use matmul instead of bmm to allow broadcasting (e.g. 512 points, 1 matrix)
+        transformed = torch.matmul(points_h, mat)
 
         # Perspective division
         w = transformed[..., 3:]
